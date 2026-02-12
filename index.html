@@ -194,33 +194,34 @@
         
         // Sample product data - REPLACE THESE URLs WITH YOUR ACTUAL IMAGES
         const productsData = {
-            'Genuine Leather': [
-                { id: 1, name: 'Premium Brown Leather', image: 'https://i.ibb.co/Zp5B3YgD/1000124584.jpg', price: '₹1200/meter' },
-                { id: 2, name: 'Black Textured Leather', image: 'https://i.ibb.co/CsbcHwh7/1000124585.jpg', price: '₹1500/meter' },
-                { id: 3, name: 'Tan Smooth Leather', image: 'https://i.ibb.co/tTTXfYqm/1000124586.jpg', price: '₹1100/meter' },
+            'Light Degine': [
+                { id: 1, name: 'H01', image: 'https://i.ibb.co/Zp5B3YgD/1000124584.jpg', price: '₹/meter' },
+                { id: 2, name: 'H02', image: 'https://i.ibb.co/CsbcHwh7/1000124585.jpg', price: '₹/meter' },
+                { id: 3, name: 'H03', image: 'https://i.ibb.co/tTTXfYqm/1000124586.jpg', price: '₹/meter' },
             ],
-            'Synthetic Leather': [
-                { id: 5, name: 'Rexine Black', image: 'https://i.ibb.co/DD5XcvvW/1000124541.jpg', price: '₹600/meter' },
-                { id: 6, name: 'PU Leather Brown', image: 'https://i.ibb.co/3ywqGFG9/1000124547.jpg', price: '₹750/meter' },
-                { id: 7, name: 'Vinyl Leather Red', image: 'https://i.ibb.co/1GQKvW0S/1000124548.jpg', price: '₹650/meter' },
-                { id: 8, name: 'Faux Leather Cream', image: 'https://i.ibb.co/vCctwsxb/1000124544.jpg', price: '₹700/meter' },
-                 { id: 8, name: 'Faux Leather Cream', image: 'https://i.ibb.co/13KrKvf/1000124543.jpg', price: '₹700/meter' },
-                { id: 8, name: 'Faux Leather Cream', image: 'https://i.ibb.co/4nffWf70/1000124549.jpg', price: '₹700/meter' },
+            'Light+ Degine': [
+                { id: 5, name: 'L01', image: 'https://i.ibb.co/DD5XcvvW/1000124541.jpg', price: '₹/meter' },
+                { id: 6, name: 'L02', image: 'https://i.ibb.co/3ywqGFG9/1000124547.jpg', price: '₹/meter' },
+                { id: 7, name: 'L03', image: 'https://i.ibb.co/1GQKvW0S/1000124548.jpg', price: '₹/meter' },
+                { id: 8, name: 'L04', image: 'https://i.ibb.co/vCctwsxb/1000124544.jpg', price: '₹/meter' },
+                 { id: 8, name: 'L05', image: 'https://i.ibb.co/13KrKvf/1000124543.jpg', price: '₹/meter' },
+                { id: 8, name: 'L06', image: 'https://i.ibb.co/4nffWf70/1000124549.jpg', price: '₹/meter' },
             ],
-            'Suede & Nubuck': [
-                { id: 9, name: 'Gray Suede', image: 'https://i.ibb.co/rGRgmVZV/1000124555.jpg', price: '₹1800/meter' },
-                { id: 10, name: 'Navy Nubuck', image: 'https://i.ibb.co/rGRgmVZV/1000124555.jpg', price: '₹1600/meter' },
-                { id: 11, name: 'Beige Suede', image: 'https://i.ibb.co/zVtXHKb3/1000124556.jpg', price: '₹1700/meter' },
-                { id: 12, name: 'Olive Nubuck', image: 'https://i.ibb.co/JVvX13r/1000124554.jpg', price: '₹1900/meter' },
-                { id: 12, name: 'Olive Nubuck', image: 'https://i.ibb.co/YT06HdD5/1000124550.jpg', price: '₹1900/meter' },
-                { id: 12, name: 'Olive Nubuck', image: 'https://i.ibb.co/Zz44VW75/1000124552.jpgg', price: '₹1900/meter' },
-                { id: 12, name: 'Olive Nubuck', image: 'https://i.ibb.co/Ld0j6Tfz/1000124551.jpg', price: '₹1900/meter' },
+            'Heavy Degine': [
+                { id: 9, name: 'N01', image: 'https://i.ibb.co/0jy1G957/1000124553.jpg', price: '₹/meter' },
+                { id: 10, name: 'N02', image: 'https://i.ibb.co/rGRgmVZV/1000124555.jpg', price: '₹/meter' },
+                { id: 11, name: 'N03', image: 'https://i.ibb.co/zVtXHKb3/1000124556.jpg', price: '₹/meter' },
+                { id: 12, name: 'N04', image: 'https://i.ibb.co/JVvX13r/1000124554.jpg', price: '₹/meter' },
+                { id: 12, name: 'N04', image: 'https://i.ibb.co/YT06HdD5/1000124550.jpg', price: '₹/meter' },
+                { id: 12, name: 'N05', image: 'https://i.ibb.co/Zz44VW75/1000124552.jpgg', price: '₹/meter' },
+                { id: 12, name: 'N06', image: 'https://i.ibb.co/Ld0j6Tfz/1000124551.jpg', price: '₹/meter' },
             ],
-            'Specialty Leather': [
-                { id: 13, name: 'Embossed Leather', image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800', price: '₹2000/meter' },
-                { id: 14, name: 'Metallic Finish', image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800', price: '₹2200/meter' },
-                { id: 15, name: 'Patent Leather', image: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800', price: '₹1800/meter' },
-                { id: 16, name: 'Waxed Leather', image: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=800', price: '₹2100/meter' },
+            'Valvets': [
+                { id: 13, name: 'V01', image: 'https://i.ibb.co/wNR6Mg3H/1000124559.jpg0', price: '₹/meter' },
+                { id: 14, name: 'V02', image: 'https://i.ibb.co/nNhQbHWY/1000124562.jpg', price: '₹/meter' },
+                { id: 15, name: 'V03', image: 'https://i.ibb.co/Xfp33knP/1000124560.jpg', price: '₹/meter' },
+                { id: 16, name: 'V04', image: 'https://i.ibb.co/dssD0vDX/1000124558.jpg', price: '₹/meter' },
+                  { id: 16, name: 'V05', image: 'https://i.ibb.co/5WyxPLHL/1000124557.jpg', price: '₹/meter' },
             ],
         };
 
