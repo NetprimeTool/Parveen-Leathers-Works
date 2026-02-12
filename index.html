@@ -10,50 +10,214 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Poppins', sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); min-height: 100vh; }
-        #root { max-width: 1400px; margin: 0 auto; }
-        .product-card { opacity: 1; transform: translateY(0); transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        .product-card:nth-child(-n+8) { animation: slideUp 0.6s ease-out forwards; }
-        html { scroll-behavior: smooth; }
-        ::-webkit-scrollbar { width: 10px; }
-        ::-webkit-scrollbar-track { background: #f1f1f1; }
-        ::-webkit-scrollbar-thumb { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 10px; }
-        @keyframes pulse { 0%, 100% { transform: scale(1); box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4); } 50% { transform: scale(1.05); box-shadow: 0 6px 25px rgba(37, 211, 102, 0.6); } }
-        .whatsapp-btn { animation: pulse 2s ease-in-out infinite; }
-        @keyframes shimmer { 0% { background-position: -1000px 0; } 100% { background-position: 1000px 0; } }
-        .image-loading { background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 1000px 100%; animation: shimmer 2s infinite; }
-        .floating-whatsapp { position: fixed; bottom: 20px; right: 20px; background: #25D366; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(37, 211, 102, 0.5); cursor: pointer; z-index: 999; animation: pulse 2s ease-in-out infinite; transition: transform 0.3s; }
-        .category-scroll::-webkit-scrollbar { display: none; }
-        .category-scroll { position: relative; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        
+        #root {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Scroll Animation Classes */
+        .product-card {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
+                        transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .product-card.fade-in-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Initial load animation for first few cards */
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .product-card:nth-child(-n+8) {
+            animation: slideUp 0.6s ease-out forwards;
+        }
+
+        .product-card:nth-child(1) { animation-delay: 0.05s; }
+        .product-card:nth-child(2) { animation-delay: 0.1s; }
+        .product-card:nth-child(3) { animation-delay: 0.15s; }
+        .product-card:nth-child(4) { animation-delay: 0.2s; }
+        .product-card:nth-child(5) { animation-delay: 0.25s; }
+        .product-card:nth-child(6) { animation-delay: 0.3s; }
+        .product-card:nth-child(7) { animation-delay: 0.35s; }
+        .product-card:nth-child(8) { animation-delay: 0.4s; }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        }
+
+        /* WhatsApp button pulse animation */
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 6px 25px rgba(37, 211, 102, 0.6);
+            }
+        }
+
+        .whatsapp-btn {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* Image shimmer loading effect */
+        @keyframes shimmer {
+            0% {
+                background-position: -1000px 0;
+            }
+            100% {
+                background-position: 1000px 0;
+            }
+        }
+
+        .image-loading {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 1000px 100%;
+            animation: shimmer 2s infinite;
+        }
+
+        /* Modal animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Floating WhatsApp Button */
+        .floating-whatsapp {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #25D366;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.5);
+            cursor: pointer;
+            z-index: 999;
+            animation: pulse 2s ease-in-out infinite;
+            transition: transform 0.3s;
+        }
+
+        .floating-whatsapp:hover {
+            transform: scale(1.1);
+        }
+
+        /* Hide category scrollbar */
+        .category-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Gradient overlay for category scroll */
+        .category-scroll {
+            position: relative;
+        }
+
+        .category-scroll::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 30px;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.95));
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
     <div id="root"></div>
+
     <script type="text/babel">
         const { useState, useEffect } = React;
         
+        // Sample product data - REPLACE THESE URLs WITH YOUR ACTUAL IMAGES
         const productsData = {
             'Genuine Leather': [
                 { id: 1, name: 'Premium Brown Leather', image: 'https://i.ibb.co/tTTXfYqm/1000124586.jpg', price: '₹1200/meter' },
                 { id: 2, name: 'Black Textured Leather', image: 'https://i.ibb.co/CsbcHwh7/1000124585.jpg', price: '₹1500/meter' },
                 { id: 3, name: 'Tan Smooth Leather', image: 'https://i.ibb.co/Zp5B3YgD/1000124584.jpg', price: '₹1100/meter' },
-                // Nayi images yahan add ho gayi hain
-                { id: 101, name: 'New Arrival Leather 1', image: 'https://i.ibb.co/jvV4XNgB/20260212-100758.jpg', price: '₹1300/meter' },
-                { id: 102, name: 'New Arrival Leather 2', image: 'https://i.ibb.co/LdbydK9x/20260212-100820.jpg', price: '₹1300/meter' },
-                { id: 103, name: 'New Arrival Leather 3', image: 'https://i.ibb.co/7dWyXVQ2/20260212-100827.jpg', price: '₹1300/meter' },
-                { id: 104, name: 'New Arrival Leather 4', image: 'https://i.ibb.co/MyW3cMZP/20260212-100848.jpg', price: '₹1300/meter' },
-                { id: 105, name: 'New Arrival Leather 5', image: 'https://i.ibb.co/JjwfHPj7/20260212-100904.jpg', price: '₹1300/meter' },
                 { id: 4, name: 'Cognac Leather Roll', image: 'https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=800', price: '₹1300/meter' },
             ],
             'Synthetic Leather': [
                 { id: 5, name: 'Rexine Black', image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800', price: '₹600/meter' },
                 { id: 6, name: 'PU Leather Brown', image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800', price: '₹750/meter' },
+                { id: 7, name: 'Vinyl Leather Red', image: 'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=800', price: '₹650/meter' },
+                { id: 8, name: 'Faux Leather Cream', image: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=800', price: '₹700/meter' },
             ],
             'Suede & Nubuck': [
                 { id: 9, name: 'Gray Suede', image: 'https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=800', price: '₹1800/meter' },
-            ]
+                { id: 10, name: 'Navy Nubuck', image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800', price: '₹1600/meter' },
+                { id: 11, name: 'Beige Suede', image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800', price: '₹1700/meter' },
+                { id: 12, name: 'Olive Nubuck', image: 'https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?w=800', price: '₹1900/meter' },
+            ],
+            'Specialty Leather': [
+                { id: 13, name: 'Embossed Leather', image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800', price: '₹2000/meter' },
+                { id: 14, name: 'Metallic Finish', image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800', price: '₹2200/meter' },
+                { id: 15, name: 'Patent Leather', image: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800', price: '₹1800/meter' },
+                { id: 16, name: 'Waxed Leather', image: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=800', price: '₹2100/meter' },
+            ],
         };
 
         function App() {
@@ -63,93 +227,589 @@
             const [headerVisible, setHeaderVisible] = useState(true);
             const [lastScrollY, setLastScrollY] = useState(0);
             const [imageLoading, setImageLoading] = useState({});
-            const phoneNumber = '919602240804';
+            
+            const phoneNumber = '919602240804'; // WhatsApp number
 
+            // Header auto-hide on scroll
             useEffect(() => {
                 const handleScroll = () => {
                     const currentScrollY = window.scrollY;
-                    if (currentScrollY < 10) setHeaderVisible(true);
-                    else if (currentScrollY > lastScrollY) setHeaderVisible(false);
-                    else setHeaderVisible(true);
+                    
+                    if (currentScrollY < 10) {
+                        setHeaderVisible(true);
+                    } else if (currentScrollY > lastScrollY) {
+                        // Scrolling down - hide header
+                        setHeaderVisible(false);
+                    } else {
+                        // Scrolling up - show header
+                        setHeaderVisible(true);
+                    }
+                    
                     setLastScrollY(currentScrollY);
                 };
+
                 window.addEventListener('scroll', handleScroll, { passive: true });
+                
                 return () => window.removeEventListener('scroll', handleScroll);
             }, [lastScrollY]);
+
+            // Scroll animation observer - Fixed to show all cards
+            useEffect(() => {
+                const observer = new IntersectionObserver(
+                    (entries) => {
+                        entries.forEach((entry) => {
+                            if (entry.isIntersecting) {
+                                entry.target.style.opacity = '1';
+                                entry.target.style.transform = 'translateY(0)';
+                            }
+                        });
+                    },
+                    { 
+                        threshold: 0.1,
+                        rootMargin: '100px' // Start animation earlier
+                    }
+                );
+
+                // Observe all cards after first 8
+                setTimeout(() => {
+                    const cards = document.querySelectorAll('.product-card');
+                    cards.forEach((card, index) => {
+                        if (index >= 8) {
+                            card.style.opacity = '0';
+                            card.style.transform = 'translateY(30px)';
+                            card.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+                            observer.observe(card);
+                        }
+                    });
+                }, 100);
+
+                return () => observer.disconnect();
+            }, [selectedCategory, searchTerm]);
 
             const categories = ['All Products', ...Object.keys(productsData)];
 
             const getFilteredProducts = () => {
                 let products = [];
+                
                 if (selectedCategory === 'All Products') {
-                    Object.values(productsData).forEach(cp => products = [...products, ...cp]);
+                    Object.values(productsData).forEach(categoryProducts => {
+                        products = [...products, ...categoryProducts];
+                    });
                 } else {
                     products = productsData[selectedCategory] || [];
                 }
-                if (searchTerm) products = products.filter(p => p.name.toLowerCase().includes(searchTerm.toLowerCase()));
+
+                if (searchTerm) {
+                    products = products.filter(product => 
+                        product.name.toLowerCase().includes(searchTerm.toLowerCase())
+                    );
+                }
+
                 return products;
             };
 
-            const handleShare = (product) => {
-                const message = `*${product.name}*\nPrice: ${product.price}\n\nImage: ${product.image}\n\n_From: Parveen Leathers Works_`;
-                window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
+            const handleShare = async (product) => {
+                try {
+                    // Try to fetch and share the actual image
+                    const response = await fetch(product.image);
+                    const blob = await response.blob();
+                    const file = new File([blob], `${product.name}.jpg`, { type: 'image/jpeg' });
+                    
+                    // Check if Web Share API is available and supports files
+                    if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+                        await navigator.share({
+                            files: [file],
+                            title: product.name,
+                            text: `${product.name}\nPrice: ${product.price}\n\nFrom: Parveen Leathers Works\n📞 9602240804`
+                        });
+                    } else {
+                        // Fallback: Open WhatsApp with text message
+                        const message = `*${product.name}*\nPrice: ${product.price}\n\nImage: ${product.image}\n\n_From: Parveen Leathers Works_\n📞 9602240804`;
+                        const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+                        window.open(whatsappUrl, '_blank');
+                    }
+                } catch (error) {
+                    // If image fetch fails, send text message with image URL
+                    const message = `*${product.name}*\nPrice: ${product.price}\n\nImage: ${product.image}\n\n_From: Parveen Leathers Works_\n📞 9602240804`;
+                    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+                    window.open(whatsappUrl, '_blank');
+                }
             };
 
             const products = getFilteredProducts();
 
             return (
                 <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }}>
-                    <header style={{ background: 'rgba(255, 255, 255, 0.95)', backdropFilter: 'blur(10px)', position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100, transform: headerVisible ? 'translateY(0)' : 'translateY(-100%)', transition: 'transform 0.4s' }}>
+                    {/* Header */}
+                    <header style={{
+                        background: 'rgba(255, 255, 255, 0.95)',
+                        backdropFilter: 'blur(10px)',
+                        boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        zIndex: 100,
+                        transform: headerVisible ? 'translateY(0)' : 'translateY(-100%)',
+                        transition: 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                    }}>
                         <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0.6rem 1rem' }}>
-                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.6rem' }}>
-                                <h1 style={{ fontSize: '1.2rem', background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', fontWeight: '700' }}>Parveen Leathers Works</h1>
-                                <a href={`tel:${phoneNumber}`} style={{ background: '#25D366', color: 'white', padding: '0.4rem 0.9rem', borderRadius: '18px', textDecoration: 'none', fontSize: '0.75rem', fontWeight: '600' }}>📞 Call</a>
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.5rem', marginBottom: '0.6rem' }}>
+                                <h1 style={{
+                                    fontSize: 'clamp(1rem, 4vw, 1.4rem)',
+                                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                                    WebkitBackgroundClip: 'text',
+                                    WebkitTextFillColor: 'transparent',
+                                    fontWeight: '700',
+                                    letterSpacing: '0.3px',
+                                    margin: 0,
+                                    lineHeight: 1.2
+                                }}>
+                                    Parveen Leathers Works
+                                </h1>
+                                <a href={`tel:${phoneNumber}`} style={{
+                                    background: '#25D366',
+                                    color: 'white',
+                                    padding: '0.4rem 0.9rem',
+                                    borderRadius: '18px',
+                                    textDecoration: 'none',
+                                    fontSize: '0.75rem',
+                                    fontWeight: '600',
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    gap: '0.25rem',
+                                    whiteSpace: 'nowrap',
+                                    flexShrink: 0
+                                }}>
+                                    📞 Call
+                                </a>
                             </div>
-                            <input type="text" placeholder="🔍 Search products..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} style={{ width: '100%', padding: '0.55rem 1rem', borderRadius: '25px', border: '1.5px solid #e0e0e0', outline: 'none', marginBottom: '0.6rem' }} />
-                            <div className="category-scroll" style={{ display: 'flex', gap: '0.5rem', overflowX: 'auto' }}>
-                                {categories.map(c => (
-                                    <button key={c} onClick={() => setSelectedCategory(c)} style={{ padding: '0.4rem 1rem', borderRadius: '15px', border: 'none', background: selectedCategory === c ? '#764ba2' : '#f0f0f0', color: selectedCategory === c ? 'white' : '#333', fontWeight: '600', cursor: 'pointer', whiteSpace: 'nowrap', fontSize: '0.75rem' }}>{c}</button>
+
+                            {/* Search Bar */}
+                            <div style={{ marginBottom: '0.6rem' }}>
+                                <input
+                                    type="text"
+                                    placeholder="🔍 Search products..."
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                    style={{
+                                        width: '100%',
+                                        padding: '0.55rem 1rem',
+                                        borderRadius: '25px',
+                                        border: '1.5px solid #e0e0e0',
+                                        fontSize: '0.85rem',
+                                        outline: 'none',
+                                        transition: 'all 0.3s'
+                                    }}
+                                    onFocus={(e) => e.target.style.borderColor = '#667eea'}
+                                    onBlur={(e) => e.target.style.borderColor = '#e0e0e0'}
+                                />
+                            </div>
+
+                            {/* Category Tabs */}
+                            <div className="category-scroll" style={{
+                                display: 'flex',
+                                gap: '0.5rem',
+                                overflowX: 'auto',
+                                padding: '0.2rem 0',
+                                WebkitOverflowScrolling: 'touch',
+                                scrollbarWidth: 'none',
+                                msOverflowStyle: 'none'
+                            }}>
+                                {categories.map(category => (
+                                    <button
+                                        key={category}
+                                        onClick={() => setSelectedCategory(category)}
+                                        style={{
+                                            padding: '0.4rem 1rem',
+                                            borderRadius: '15px',
+                                            border: 'none',
+                                            background: selectedCategory === category 
+                                                ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+                                                : '#f0f0f0',
+                                            color: selectedCategory === category ? 'white' : '#333',
+                                            fontWeight: '600',
+                                            cursor: 'pointer',
+                                            whiteSpace: 'nowrap',
+                                            fontSize: '0.75rem',
+                                            transition: 'all 0.3s',
+                                            boxShadow: selectedCategory === category 
+                                                ? '0 2px 8px rgba(102, 126, 234, 0.3)'
+                                                : 'none'
+                                        }}
+                                        onMouseEnter={(e) => {
+                                            if (selectedCategory !== category) {
+                                                e.target.style.background = '#e0e0e0';
+                                            }
+                                        }}
+                                        onMouseLeave={(e) => {
+                                            if (selectedCategory !== category) {
+                                                e.target.style.background = '#f0f0f0';
+                                            }
+                                        }}
+                                    >
+                                        {category}
+                                    </button>
                                 ))}
                             </div>
                         </div>
                     </header>
 
-                    <main style={{ padding: '1.5rem 1rem', paddingTop: '130px' }}>
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1.5rem' }}>
-                            {products.map((product) => (
-                                <div key={product.id} className="product-card" style={{ background: 'white', borderRadius: '20px', overflow: 'hidden', boxShadow: '0 10px 40px rgba(0,0,0,0.1)' }}>
-                                    <div style={{ position: 'relative', paddingBottom: '100%', background: '#f0f0f0' }}>
-                                        {imageLoading[product.id] !== false && <div className="image-loading" style={{ position: 'absolute', inset: 0 }} />}
-                                        <img src={product.image} loading="lazy" onLoad={() => setImageLoading(p => ({ ...p, [product.id]: false }))} onClick={() => setSelectedImage(product)} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: imageLoading[product.id] !== false ? 0 : 1, transition: 'opacity 0.3s' }} />
-                                        <button className="whatsapp-btn" onClick={(e) => { e.stopPropagation(); handleShare(product); }} style={{ position: 'absolute', top: '15px', right: '15px', background: '#25D366', border: 'none', borderRadius: '50%', width: '50px', height: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 10 }}>
-                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    {/* Products Grid */}
+                    <main style={{ padding: '1.5rem 1rem', paddingTop: '120px' }}>
+                        <div style={{
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+                            gap: '1.5rem',
+                            maxWidth: '1400px',
+                            margin: '0 auto'
+                        }}>
+                            {products.map((product, index) => (
+                                <div
+                                    key={product.id}
+                                    className="product-card"
+                                    style={{
+                                        background: 'white',
+                                        borderRadius: '20px',
+                                        overflow: 'hidden',
+                                        boxShadow: '0 10px 40px rgba(0, 0, 0, 0.1)',
+                                        cursor: 'pointer',
+                                        position: 'relative',
+                                        transitionDelay: `${index * 0.05}s`,
+                                    }}
+                                    onMouseEnter={(e) => {
+                                        e.currentTarget.style.transform = 'translateY(-10px) scale(1.02)';
+                                        e.currentTarget.style.boxShadow = '0 20px 60px rgba(102, 126, 234, 0.3)';
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                                        e.currentTarget.style.boxShadow = '0 10px 40px rgba(0, 0, 0, 0.1)';
+                                    }}
+                                >
+                                    <div style={{ position: 'relative', paddingBottom: '100%', overflow: 'hidden', background: '#f0f0f0' }}>
+                                        {imageLoading[product.id] !== false && (
+                                            <div className="image-loading" style={{
+                                                position: 'absolute',
+                                                top: 0,
+                                                left: 0,
+                                                width: '100%',
+                                                height: '100%',
+                                            }} />
+                                        )}
+                                        <img
+                                            src={product.image}
+                                            alt={product.name}
+                                            loading="lazy"
+                                            onLoad={() => setImageLoading(prev => ({ ...prev, [product.id]: false }))}
+                                            style={{
+                                                position: 'absolute',
+                                                top: 0,
+                                                left: 0,
+                                                width: '100%',
+                                                height: '100%',
+                                                objectFit: 'cover',
+                                                transition: 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+                                                opacity: imageLoading[product.id] !== false ? 0 : 1
+                                            }}
+                                            onClick={() => setSelectedImage(product)}
+                                            onMouseEnter={(e) => e.target.style.transform = 'scale(1.15) rotate(2deg)'}
+                                            onMouseLeave={(e) => e.target.style.transform = 'scale(1) rotate(0deg)'}
+                                        />
+                                        
+                                        {/* WhatsApp Share Button on Image */}
+                                        <button
+                                            className="whatsapp-btn"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleShare(product);
+                                            }}
+                                            style={{
+                                                position: 'absolute',
+                                                top: '15px',
+                                                right: '15px',
+                                                background: '#25D366',
+                                                border: 'none',
+                                                borderRadius: '50%',
+                                                width: '50px',
+                                                height: '50px',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                cursor: 'pointer',
+                                                boxShadow: '0 4px 15px rgba(37, 211, 102, 0.4)',
+                                                transition: 'all 0.3s',
+                                                zIndex: 10
+                                            }}
+                                            onMouseEnter={(e) => {
+                                                e.target.style.transform = 'scale(1.2) rotate(15deg)';
+                                                e.target.style.boxShadow = '0 8px 30px rgba(37, 211, 102, 0.7)';
+                                                e.target.style.animation = 'none';
+                                            }}
+                                            onMouseLeave={(e) => {
+                                                e.target.style.transform = 'scale(1)';
+                                                e.target.style.boxShadow = '0 4px 15px rgba(37, 211, 102, 0.4)';
+                                                e.target.style.animation = 'pulse 2s ease-in-out infinite';
+                                            }}
+                                        >
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                                            </svg>
                                         </button>
                                     </div>
+
                                     <div style={{ padding: '1.5rem' }}>
-                                        <h3 style={{ fontSize: '1.2rem', fontWeight: '600' }}>{product.name}</h3>
-                                        <p style={{ fontSize: '1.3rem', fontWeight: '700', color: '#764ba2', margin: '1rem 0' }}>{product.price}</p>
-                                        <button onClick={() => handleShare(product)} style={{ width: '100%', padding: '0.9rem', background: '#25D366', color: 'white', border: 'none', borderRadius: '12px', fontWeight: '600', cursor: 'pointer' }}>Share on WhatsApp</button>
+                                        <h3 style={{
+                                            fontSize: '1.2rem',
+                                            fontWeight: '600',
+                                            marginBottom: '0.5rem',
+                                            color: '#333'
+                                        }}>
+                                            {product.name}
+                                        </h3>
+                                        <p style={{
+                                            fontSize: '1.3rem',
+                                            fontWeight: '700',
+                                            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                                            WebkitBackgroundClip: 'text',
+                                            WebkitTextFillColor: 'transparent',
+                                            marginBottom: '1rem'
+                                        }}>
+                                            {product.price}
+                                        </p>
+                                        <button
+                                            onClick={() => handleShare(product)}
+                                            style={{
+                                                width: '100%',
+                                                padding: '0.9rem',
+                                                background: 'linear-gradient(135deg, #25D366 0%, #20BA5A 100%)',
+                                                color: 'white',
+                                                border: 'none',
+                                                borderRadius: '12px',
+                                                fontSize: '1rem',
+                                                fontWeight: '600',
+                                                cursor: 'pointer',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                gap: '0.5rem',
+                                                transition: 'all 0.3s'
+                                            }}
+                                            onMouseEnter={(e) => {
+                                                e.target.style.transform = 'scale(1.05)';
+                                                e.target.style.boxShadow = '0 6px 20px rgba(37, 211, 102, 0.4)';
+                                            }}
+                                            onMouseLeave={(e) => {
+                                                e.target.style.transform = 'scale(1)';
+                                                e.target.style.boxShadow = 'none';
+                                            }}
+                                        >
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+                                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                                            </svg>
+                                            Share on WhatsApp
+                                        </button>
                                     </div>
                                 </div>
                             ))}
                         </div>
+
+                        {products.length === 0 && (
+                            <div style={{
+                                textAlign: 'center',
+                                padding: '4rem 2rem',
+                                color: 'white'
+                            }}>
+                                <h2 style={{ fontSize: '2rem', marginBottom: '1rem' }}>
+                                    No products found
+                                </h2>
+                                <p style={{ fontSize: '1.1rem' }}>
+                                    Try adjusting your search or category filter
+                                </p>
+                            </div>
+                        )}
                     </main>
 
+                    {/* Image Modal */}
                     {selectedImage && (
-                        <div onClick={() => setSelectedImage(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.9)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}>
-                            <img src={selectedImage.image} style={{ maxWidth: '95%', maxHeight: '80vh', borderRadius: '10px' }} />
+                        <div
+                            onClick={() => setSelectedImage(null)}
+                            style={{
+                                position: 'fixed',
+                                top: 0,
+                                left: 0,
+                                right: 0,
+                                bottom: 0,
+                                background: 'rgba(0, 0, 0, 0.95)',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                zIndex: 1000,
+                                padding: '2rem',
+                                animation: 'fadeIn 0.3s ease-out'
+                            }}
+                        >
+                            <div
+                                onClick={(e) => e.stopPropagation()}
+                                style={{
+                                    position: 'relative',
+                                    maxWidth: '90%',
+                                    maxHeight: '90vh',
+                                    background: 'white',
+                                    borderRadius: '20px',
+                                    overflow: 'hidden',
+                                    boxShadow: '0 25px 100px rgba(0, 0, 0, 0.5)',
+                                    animation: 'scaleIn 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+                                }}
+                            >
+                                <button
+                                    onClick={() => setSelectedImage(null)}
+                                    style={{
+                                        position: 'absolute',
+                                        top: '20px',
+                                        right: '20px',
+                                        background: 'rgba(255, 255, 255, 0.9)',
+                                        border: 'none',
+                                        borderRadius: '50%',
+                                        width: '45px',
+                                        height: '45px',
+                                        fontSize: '1.5rem',
+                                        cursor: 'pointer',
+                                        zIndex: 10,
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        fontWeight: 'bold'
+                                    }}
+                                >
+                                    ✕
+                                </button>
+                                <img
+                                    src={selectedImage.image}
+                                    alt={selectedImage.name}
+                                    style={{
+                                        width: '100%',
+                                        maxHeight: '70vh',
+                                        objectFit: 'contain'
+                                    }}
+                                />
+                                <div style={{ padding: '2rem' }}>
+                                    <h2 style={{ fontSize: '1.8rem', marginBottom: '1rem' }}>
+                                        {selectedImage.name}
+                                    </h2>
+                                    <p style={{
+                                        fontSize: '1.5rem',
+                                        fontWeight: '700',
+                                        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                                        WebkitBackgroundClip: 'text',
+                                        WebkitTextFillColor: 'transparent',
+                                        marginBottom: '1.5rem'
+                                    }}>
+                                        {selectedImage.price}
+                                    </p>
+                                    <button
+                                        onClick={() => handleShare(selectedImage)}
+                                        style={{
+                                            width: '100%',
+                                            padding: '1.2rem',
+                                            background: 'linear-gradient(135deg, #25D366 0%, #20BA5A 100%)',
+                                            color: 'white',
+                                            border: 'none',
+                                            borderRadius: '15px',
+                                            fontSize: '1.1rem',
+                                            fontWeight: '600',
+                                            cursor: 'pointer',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            gap: '0.7rem'
+                                        }}
+                                    >
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                                        </svg>
+                                        Share on WhatsApp
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     )}
 
-                    <a href={`https://wa.me/${phoneNumber}`} target="_blank" className="floating-whatsapp">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    {/* Floating WhatsApp Button */}
+                    <a 
+                        href={`https://wa.me/${phoneNumber}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="floating-whatsapp"
+                        title="Chat on WhatsApp"
+                    >
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                        </svg>
                     </a>
+
+                    {/* Footer */}
+                    <footer style={{
+                        background: 'rgba(255, 255, 255, 0.95)',
+                        padding: '2.5rem 1.5rem',
+                        marginTop: '3rem',
+                        textAlign: 'center',
+                        boxShadow: '0 -4px 20px rgba(0,0,0,0.05)'
+                    }}>
+                        <h3 style={{
+                            fontSize: '1.8rem',
+                            marginBottom: '1rem',
+                            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                            WebkitBackgroundClip: 'text',
+                            WebkitTextFillColor: 'transparent',
+                            fontWeight: '700'
+                        }}>
+                            Parveen Leathers Works
+                        </h3>
+                        <p style={{ color: '#666', marginBottom: '1rem', fontSize: '1rem' }}>
+                            Premium Quality Leather Materials
+                        </p>
+                        <div style={{ 
+                            display: 'flex', 
+                            gap: '1rem', 
+                            justifyContent: 'center', 
+                            flexWrap: 'wrap',
+                            marginBottom: '1rem'
+                        }}>
+                            <a href={`tel:${phoneNumber}`} style={{
+                                color: '#25D366',
+                                fontSize: '1.2rem',
+                                fontWeight: '600',
+                                textDecoration: 'none',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '0.5rem'
+                            }}>
+                                📞 9602240804
+                            </a>
+                            <a href={`https://wa.me/${phoneNumber}`} target="_blank" rel="noopener noreferrer" style={{
+                                color: '#25D366',
+                                fontSize: '1rem',
+                                fontWeight: '600',
+                                textDecoration: 'none',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '0.5rem'
+                            }}>
+                                💬 WhatsApp Chat
+                            </a>
+                        </div>
+                        <p style={{ color: '#999', marginTop: '1.5rem', fontSize: '0.85rem' }}>
+                            © 2026 Parveen Leathers Works. All rights reserved.
+                        </p>
+                        <p style={{ color: '#aaa', marginTop: '0.5rem', fontSize: '0.75rem' }}>
+                            Quality Leather | Professional Service | Trusted Partner
+                        </p>
+                    </footer>
                 </div>
             );
         }
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
+        ReactDOM.render(<App />, document.getElementById('root'));
     </script>
 </body>
 </html>
